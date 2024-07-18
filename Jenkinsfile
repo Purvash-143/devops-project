@@ -5,8 +5,8 @@ pipeline {
         maven 'Maven3'
     }
     environment {
-        LOCAL_IMAGE_NAME=purvash/devops-image:latest
-        REGISTRY_NAME=purvash/devops-image:${BUILD_NUMBER}
+        LOCAL_IMAGE_NAME="purvash/devops-image:latest"
+        REGISTRY_NAME="purvash/devops-image:${BUILD_NUMBER}"
     }
 
     stages{
