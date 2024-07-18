@@ -13,7 +13,7 @@ pipeline {
         stage('Build docker image'){
             steps{
                 script{
-                    bat 'docker build -t purvash/devops-images .'
+                    bat 'docker build -t purvash/devops-image:latest .'
                     bat 'docker images'
                 }
             }
@@ -23,7 +23,7 @@ pipeline {
                 script{
                    withCredentials([string(credentialsId: 'dockerhub-pass', variable: 'dockerhubpass')]) {
                    bat 'docker login https://registry.hub.docker.com --username purvash --password Sangeetha@12345'
-                   bat 'docker push purvash/devops-images'
+                   bat 'docker push purvash/devops-image:${BUILD_NUMBER}'
 }
                    
            }
