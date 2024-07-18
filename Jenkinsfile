@@ -22,7 +22,7 @@ pipeline {
             steps{
                 script{
                    withCredentials([string(credentialsId: 'dockerhub-pass', variable: 'dockerhubpass')]) {
-                   bat 'docker login https://registry.hub.docker.com --username purvash -p ${dockerhubpass}'
+                   bat 'docker login https://registry.hub.docker.com --username purvash --password Sangeetha@12345'
                    bat 'docker push Purvash/devops-image'
 }
                    
