@@ -1,8 +1,14 @@
 pipeline {
     agent any
+
     tools{
         maven 'Maven3'
     }
+    environment {
+        LOCAL_IMAGE_NAME=purvash/devops-image:latest
+        REGISTRY_NAME=purvash/devops-image:${BUILD_NUMBER}
+    }
+
     stages{
         stage('Build Maven'){
             steps{
@@ -13,7 +19,7 @@ pipeline {
         stage('Build docker image'){
             steps{
                 script{
-                    bat 'docker build -t purvash/devops-image:latest .'
+                    bat "docker build -t ${LOCAL_IMAGE_NAME} ."
                     bat 'docker images'
                 }
             }
@@ -23,7 +29,8 @@ pipeline {
                 script{
                    withCredentials([string(credentialsId: 'dockerhub-pass', variable: 'dockerhubpass')]) {
                    bat "docker login https://registry.hub.docker.com --username purvash --password ${dockerhubpass}"
-                   bat "docker push purvash/devops-image:${BUILD_NUMBER}"
+                   bat "docker tag ${LOCAL_IMAGE_NAME} ${REGISTRY_NAME}"
+                   bat "docker push ${REGISTRY_NAME}"
 }
                    
            }
