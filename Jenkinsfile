@@ -1,39 +1,40 @@
 pipeline {
     agent any
     tools{
-        maven 'maven_3_5_0'
+        maven 'Maven3'
     }
     stages{
         stage('Build Maven'){
             steps{
-                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Java-Techie-jt/devops-automation']]])
-                sh 'mvn clean install'
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Purvash-143/devops-project']])
+                bat 'mvn clean install'
             }
         }
         stage('Build docker image'){
             steps{
                 script{
-                    sh 'docker build -t javatechie/devops-integration .'
+                    bat 'docker build -t purvash/devops-image .'
+                    bat 'docker images'
                 }
             }
         }
         stage('Push image to Hub'){
             steps{
                 script{
-                   withCredentials([string(credentialsId: 'dockerhub-pwd', variable: 'dockerhubpwd')]) {
-                   sh 'docker login -u javatechie -p ${dockerhubpwd}'
-
+                   withCredentials([string(credentialsId: 'dockerhub-pass', variable: 'dockerhubpass')]) {
+                   bat 'docker login https://registry.hub.docker.com --username purvash --password Sangeetha@12345'
+                   bat 'docker push purvash/devops-image:latest'
 }
-                   sh 'docker push javatechie/devops-integration'
-                }
-            }
-        }
-        stage('Deploy to k8s'){
-            steps{
-                script{
-                    kubernetesDeploy (configs: 'deploymentservice.yaml',kubeconfigId: 'k8sconfigpwd')
-                }
-            }
-        }
+                   
+           }
+             }
+         }
+//         stage('Deploy to k8s'){
+//             steps{
+//                 script{
+//                     kubernetesDeploy (configs: 'deploymentservice.yaml',kubeconfigId: 'k8sconfigpwd')
+//                 }
+//             }
+//         }
     }
 }
