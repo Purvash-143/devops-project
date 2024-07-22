@@ -45,7 +45,7 @@ pipeline {
                 
                 
                 SET text = readFile file: "deployment.yaml"
-                text = text.replaceAll("%tag%", "${BUILD_NUMBER}") 
+                SET text = text.replaceAll("%tag%", "${BUILD_NUMBER}") 
                     
                 git config --global user.email "purvashgangolli@gmail.com"
                 git config --global user.name "Purvash"
