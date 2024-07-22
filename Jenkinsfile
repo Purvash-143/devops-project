@@ -42,11 +42,11 @@ pipeline {
                     bat """
                 git clone https://github.com/Purvash-143/argocd-app-config.git
                 cd argocd-app-config/dev
-                """
                 
-                def text = readFile file: "deployment.yaml"
+                
+                SET text = readFile file: "deployment.yaml"
                 text = text.replaceAll("%tag%", "${BUILD_NUMBER}") 
-                    bat """
+                    
                 git config --global user.email "purvashgangolli@gmail.com"
                 git config --global user.name "Purvash"
 
