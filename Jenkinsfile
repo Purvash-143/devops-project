@@ -44,7 +44,7 @@ pipeline {
                 cd dev
                 
                 def text = readFile file: "deployment.yaml"
-                text = text.replaceAll("%tag%", "${${BUILD_NUMBER}}") 
+                text = text.replaceAll("%tag%", "${BUILD_NUMBER}") 
 
                 git add . 
                 git commit -m "Update app image tag to ${BUILD_NUMBER}"
