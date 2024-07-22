@@ -44,8 +44,26 @@ pipeline {
                 cd argocd-app-config/dev
                 
                 
-                SET text = readFile file: "deployment.yaml"
-                SET text = text.replaceAll("%tag%", "${BUILD_NUMBER}") 
+                @echo off
+                setlocal enabledelayedexpansion
+
+                    REM Define file path and name
+                    set "file=deployment.yaml"
+
+                    REM Read file content into a variable
+                    for /f "usebackq delims=" %%a in ("%file%") do set "text=%%a"
+
+                    REM Replace '%tag%' with '${BUILD_NUMBER}'
+                    set "text=!text:%tag%=${BUILD_NUMBER}!"
+
+                    REM Output the updated text (optional)
+                    echo Updated text:
+                    echo !text!
+
+                    REM Write updated text back to file
+                    echo !text! > "%file%"
+
+                    endlocal 
                     
                 git config --global user.email "purvashgangolli@gmail.com"
                 git config --global user.name "Purvash"
