@@ -41,7 +41,7 @@ pipeline {
                 script{
                     bat """
                 git clone https://github.com/Purvash-143/argocd-app-config.git
-                cd dev
+                cd argocd-app-config/dev
                 
                 def text = readFile file: "deployment.yaml"
                 text = text.replaceAll("%tag%", "${BUILD_NUMBER}") 
