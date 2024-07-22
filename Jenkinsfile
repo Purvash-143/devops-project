@@ -52,7 +52,7 @@ pipeline {
 
                 git add . 
                 git commit -m "Update app image tag to ${BUILD_NUMBER}"
-                git push 
+                git push origin main
             """
                 }
             }
