@@ -36,12 +36,22 @@ pipeline {
            }
              }
          }
-//         stage('Deploy to k8s'){
-//             steps{
-//                 script{
-//                     kubernetesDeploy (configs: 'deploymentservice.yaml',kubeconfigId: 'k8sconfigpwd')
-//                 }
-//             }
-//         }
+        stage('Edit the yaml file'){
+            steps{
+                script{
+                    bat """
+                git clone https://github.com/Purvash-143/argocd-app-config.git
+                cd dev
+                
+                def text = readFile file: "deployment.yaml"
+                text = text.replaceAll("%tag%", "${${BUILD_NUMBER}}") 
+
+                git add . 
+                git commit -m "Update app image tag to ${BUILD_NUMBER}"
+                git push 
+            """
+                }
+            }
+        }
     }
 }
