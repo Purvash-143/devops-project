@@ -36,27 +36,27 @@ pipeline {
            }
              }
          }
-        // stage('Edit the yaml file'){
-        //     steps{
-        //         script{
-        //             bat """
-        //         git clone https://github.com/Purvash-143/argocd-app-config.git
-        //         cd argocd-app-config/dev
+        stage('Edit the yaml file'){
+            steps{
+                script{
+                    bat """
+                git clone https://github.com/Purvash-143/argocd-app-config.git
+                cd argocd-app-config/dev
                 
                 
-        //         SET text = readFile file: "deployment.yaml"
-        //         SET text = text.replaceAll("%tag%", "${BUILD_NUMBER}")
+                SET text = readFile file: "deployment.yaml"
+                SET text = text.replaceAll("%tag%", "${BUILD_NUMBER}")
 
                     
-        //         git config --global user.email "purvashgangolli@gmail.com"
-        //         git config --global user.name "Purvash"
+                git config --global user.email "purvashgangolli@gmail.com"
+                git config --global user.name "Purvash"
 
-        //         git add . 
-        //         git commit -m "Update app image tag to ${BUILD_NUMBER}"
-        //         git push origin main
-        //     """
-        //         }
-        //     }
-        // }
+                git add . 
+                git commit -m "Update app image tag to ${BUILD_NUMBER}"
+                git push origin main
+            """
+                }
+            }
+        }
     }
 }
