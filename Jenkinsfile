@@ -36,44 +36,27 @@ pipeline {
            }
              }
          }
-        stage('Edit the yaml file'){
-            steps{
-                script{
-                    bat """
-                git clone https://github.com/Purvash-143/argocd-app-config.git
-                cd argocd-app-config/dev
+        // stage('Edit the yaml file'){
+        //     steps{
+        //         script{
+        //             bat """
+        //         git clone https://github.com/Purvash-143/argocd-app-config.git
+        //         cd argocd-app-config/dev
                 
                 
-                @echo off
-                setlocal enabledelayedexpansion
+        //         SET text = readFile file: "deployment.yaml"
+        //         SET text = text.replaceAll("%tag%", "${BUILD_NUMBER}")
 
-                    REM Define file path and name
-                    set "file=deployment.yaml"
-
-                    REM Read file content into a variable
-                    for /f "usebackq delims=" %%a in ("%file%") do set "text=%%a"
-
-                    REM Replace '%tag%' with '${BUILD_NUMBER}'
-                    set "text=!text:%tag%=${BUILD_NUMBER}!"
-
-                    REM Output the updated text (optional)
-                    echo Updated text:
-                    echo !text!
-
-                    REM Write updated text back to file
-                    echo !text! > "%file%"
-
-                    endlocal 
                     
-                git config --global user.email "purvashgangolli@gmail.com"
-                git config --global user.name "Purvash"
+        //         git config --global user.email "purvashgangolli@gmail.com"
+        //         git config --global user.name "Purvash"
 
-                git add . 
-                git commit -m "Update app image tag to ${BUILD_NUMBER}"
-                git push origin main
-            """
-                }
-            }
-        }
+        //         git add . 
+        //         git commit -m "Update app image tag to ${BUILD_NUMBER}"
+        //         git push origin main
+        //     """
+        //         }
+        //     }
+        // }
     }
 }
